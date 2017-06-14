@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="form-group">
-              <input type="file">
+              <input type="file" v-on:change="setAttachment">
               <div class="help-block">
                 <p>Envie um anexo, pondendo ser somente imagem no formato jpeg e png, ou documento em pdf e word. Tamanho máximo é de 5 MB.</p>
               </div>
@@ -57,19 +57,28 @@
         form: {
           titulo: '',
           prioridade: 1,
-          ocorrencia: ''
+          ocorrencia: '',
+          attachment: null
         }
       }
     },
     methods: {
-      fileOnChange(){
-
+      setAttachment(e){
+          let files = e.target.files || e.dataTransfer.files;
+          if (!files.length) {
+            return;
+          }
+          this.createAttachment(files[0]);
       },
-      fileCreate(){
-
-      },
-      submit(){
-
+      createAttachment(file){
+          var image = new Image();
+          var reader = new FileReader();
+          var vm = this;
+          reader.onload = (e) => {
+            vm.form.attachment = e.target.result;
+            vm.$emit('anexoFileUploader', e.target.result);
+          }
+          reader.readAsDataURL(file);
       }
     }
   }

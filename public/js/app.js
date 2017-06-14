@@ -46433,15 +46433,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       form: {
         titulo: '',
         prioridade: 1,
-        ocorrencia: ''
+        ocorrencia: '',
+        attachment: null
       }
     };
   },
 
   methods: {
-    fileOnChange: function fileOnChange() {},
-    fileCreate: function fileCreate() {},
-    submit: function submit() {}
+    setAttachment: function setAttachment(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) {
+        return;
+      }
+      this.createAttachment(files[0]);
+    },
+    createAttachment: function createAttachment(file) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+      reader.onload = function (e) {
+        vm.form.attachment = e.target.result;
+        vm.$emit('anexoFileUploader', e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
   }
 });
 
@@ -46450,7 +46465,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(54)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 67 */
@@ -46581,21 +46596,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.form.ocorrencia = $event.target.value
       }
     }
-  }), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2)])])])])])
+  }), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "type": "file"
+    },
+    on: {
+      "change": _vm.setAttachment
+    }
+  }), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _vm._m(2)])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "help-block"
   }, [_c('p', [_vm._v("Digite brevemente a sua ocorrência, seja direto.")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    attrs: {
-      "type": "file"
-    }
-  }), _vm._v(" "), _c('div', {
     staticClass: "help-block"
-  }, [_c('p', [_vm._v("Envie um anexo, pondendo ser somente imagem no formato jpeg e png, ou documento em pdf e word. Tamanho máximo é de 5 MB.")])])])
+  }, [_c('p', [_vm._v("Envie um anexo, pondendo ser somente imagem no formato jpeg e png, ou documento em pdf e word. Tamanho máximo é de 5 MB.")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "form-group"
